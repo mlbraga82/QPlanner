@@ -116,8 +116,15 @@ def create_points_along_line():
     # Iniciar edição na nova camada
     point_layer.startEditing()
     
-    # Iterar sobre as feições da camada de linha
-    for feature in layer.getFeatures():
+    # Verificar se há feições selecionadas
+    selected_features = layer.selectedFeatures()
+    if selected_features:
+        features = selected_features
+    else:
+        features = layer.getFeatures()
+    
+    # Iterar sobre as feições (selecionadas ou todas)
+    for feature in features:
         geom = feature.geometry()
         # Transformar geometria para EPSG:3857
         geom_3857 = QgsGeometry(geom)
